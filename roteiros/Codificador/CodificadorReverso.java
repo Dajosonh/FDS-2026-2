@@ -19,9 +19,11 @@ public class CodificadorReverso implements Codificador {
 
     public String decodifica(String str) {
 
-        // Parte do Davi
-
+    if(str==null) {
         return null;
+    }
+
+        return new StringBuilder(str).reverse().toString();
 
     }
 }

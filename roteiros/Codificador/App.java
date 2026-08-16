@@ -13,6 +13,7 @@ public class App {
             System.out.println("Nivel de seguranca: " + cod.getNivelSeguranca());
             System.out.println("Texto original: " + texto);
             System.out.println("Texto codificado: " + cod.codifica(texto));
+            System.out.println("Texto decodificado: " + cod.decodifica(cod.codifica(texto)));
             System.out.println();
         }
     }
