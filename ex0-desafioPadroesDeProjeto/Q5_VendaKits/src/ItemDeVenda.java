@@ -1,27 +1,24 @@
 public class ItemDeVenda {
-    private Produto produto;
+    private Oferta oferta;
     private int quantidade;
 
-    public ItemDeVenda(Produto produto, int quantidade) {
-        this.produto = produto;
+    public ItemDeVenda(Oferta oferta, int quantidade) {
+        this.oferta = oferta;
         this.quantidade = quantidade;
     }
 
-    public Produto getProduto() {
-        return produto;
-    }
-
-    public int getQuantidade() {
-        return quantidade;
-    }
-
     public double getSubTotal() {
-        return produto.getPreco() * quantidade;
+        return oferta.getPreco() * quantidade;
     }
 
     @Override
     public String toString() {
-        return String.format("%d %s %d x %.2f = %.2f%n",produto.getId(), produto.getNome(), quantidade, produto.getPreco(), getSubTotal());
+        return String.format(
+                "%d %s %d x %.2f = %.2f%n",
+                oferta.getId(),
+                oferta.getNome(),
+                quantidade,
+                oferta.getPreco(),
+                getSubTotal());
     }
-            
 }
