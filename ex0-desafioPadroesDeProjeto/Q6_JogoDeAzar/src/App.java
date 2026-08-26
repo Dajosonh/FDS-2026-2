@@ -18,10 +18,9 @@ public class App {
                     + "   últimas 5: " + d6ComHistorico.getUltimasJogadas());
         }
 
-        // o dado de dentro segue sem saber que existe histórico
+
         System.out.println("Histórico do d6 puro: " + d6.getUltimasJogadas());
 
-        // decoradores empilhados
         System.out.println("\n=== D20 com duas janelas ===");
         Dado curto = new Dado(new Dado(20), 3);
         Dado longo = new Dado(curto, 10);

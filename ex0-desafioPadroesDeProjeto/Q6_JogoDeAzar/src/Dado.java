@@ -7,12 +7,12 @@ public class Dado {
     private int valorJogada;
     private final Random random;
 
-    // campos usados só quando o objeto é decorador
+
     private final Dado interno;
     private final List<Integer> ultimasJogadas;
     private final int limite;
 
-    // construtor original: dado simples
+
     public Dado(int lados) {
         this.lados = lados;
         this.random = new Random();
@@ -21,7 +21,7 @@ public class Dado {
         this.limite = 0;
     }
 
-    // decorador com as 5 últimas jogadas
+
     public Dado(Dado interno) {
         this(interno, 5);
     }
@@ -31,7 +31,7 @@ public class Dado {
         if (interno == null) {
             throw new IllegalArgumentException("O dado a ser decorado não pode ser nulo.");
         }
-        this.lados = interno.lados;   // acesso direto: é a mesma classe
+        this.lados = interno.lados;
         this.random = null;
         this.interno = interno;
         this.ultimasJogadas = new ArrayList<>();
@@ -39,15 +39,15 @@ public class Dado {
     }
 
     public void rolar() {
-        if (interno == null) {                 // dado simples: sorteia
+        if (interno == null) {
             valorJogada = random.nextInt(lados) + 1;
             return;
         }
-        interno.rolar();                       // decorador: delega
-        valorJogada = interno.getValor();      // lê o resultado
-        ultimasJogadas.add(valorJogada);       // e acrescenta a responsabilidade nova
+        interno.rolar();
+        valorJogada = interno.getValor();
+        ultimasJogadas.add(valorJogada);
         if (ultimasJogadas.size() > limite) {
-            ultimasJogadas.remove(0);          // descarta a mais antiga
+            ultimasJogadas.remove(0);
         }
     }
 
