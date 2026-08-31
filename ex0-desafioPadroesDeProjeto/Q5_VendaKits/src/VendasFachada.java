@@ -27,9 +27,9 @@ public interface VendasFachada {
     String emitirComprovante(Venda umaVenda);
 
     /**
-     * Consulta a lista de produtos disponíveis para venda
+     * Consulta a lista de itens vendáveis (produtos e kits) disponíveis para venda
      *
-     * @return a lista de produtos disponíveis para venda
+     * @return a lista de itens vendáveis disponíveis para venda
      */
     List<Oferta> buscarProdutos();
 
