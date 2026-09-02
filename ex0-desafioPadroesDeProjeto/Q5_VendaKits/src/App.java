@@ -5,7 +5,7 @@ public class App {
         VendasFachada proc = new VendasEmMemoria();
         List<Oferta> ofertas = proc.buscarProdutos();
 
-        // Exibir ofertas disponíveis
+        
         System.out.println("=== OFERTAS DISPONÍVEIS ===");
         for (Oferta oferta : ofertas) {
             if (oferta instanceof Kit) {
@@ -17,13 +17,13 @@ public class App {
 
         System.out.println("\n=== VENDA 1: Produtos Individuais ===");
         Venda venda1 = proc.iniciarVenda();
-        proc.registrarVenda(venda1, ofertas.get(0).getId(), 2); // 2x Caneta
-        proc.registrarVenda(venda1, ofertas.get(1).getId(), 1); // 1x Borracha
+        proc.registrarVenda(venda1, ofertas.get(0).getId(), 2); 
+        proc.registrarVenda(venda1, ofertas.get(1).getId(), 1); 
         System.out.println(proc.emitirComprovante(venda1));
 
         System.out.println("\n=== VENDA 2: Com Kit ===");
         Venda venda2 = proc.iniciarVenda();
-        proc.registrarVenda(venda2, ofertas.get(3).getId(), 1); // 1x Kit Escolar (composite)
+        proc.registrarVenda(venda2, ofertas.get(3).getId(), 1); 
         System.out.println(proc.emitirComprovante(venda2));
     }
 }
