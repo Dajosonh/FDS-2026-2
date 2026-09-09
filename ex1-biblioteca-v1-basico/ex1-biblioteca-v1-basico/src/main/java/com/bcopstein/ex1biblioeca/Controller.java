@@ -30,4 +30,21 @@ public class Controller {
     public List<Livro> listaLivros() {
         return livros;
     }
+
+    @GetMapping("/titulos")
+    @CrossOrigin(origins = "*")
+    public List<String> listaTitulos() {
+        return livros.stream()
+                .map(livro -> livro.getTitulo())
+                .toList();
+    }
+
+    @GetMapping("/autores")
+    @CrossOrigin(origins = "*")
+    public List<String> listaAutores() {
+        return livros.stream()
+                .map(livro -> livro.getAutor())
+                .distinct()
+                .toList();
+    }
 }
