@@ -5,9 +5,11 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -39,15 +41,24 @@ public class Controller {
         return livros;
     }
 
+    @GetMapping("/titulos")
+    @CrossOrigin(origins = "*")
+    public List<String> getListaTitulos() {
+        return livros.stream()
+                .map(livro -> livro.getTitulo())
+                .toList();
+    }
+
     @GetMapping("autores")
     @CrossOrigin(origins = "*")
     public List<String> getListaAutores() {
         return livros.stream()
                 .map(l -> l.getAutor())
+                .distinct()
                 .toList();
     }
 
-    @GetMapping("livrosautor")// livrosautor?autor=Huguinho Pato
+    @GetMapping("livrosautor") // livrosautor?autor=Huguinho Pato
     @CrossOrigin(origins = "*")
     public List<Livro> getLivrosDoAutor(@RequestParam(value = "autor") String autor) {
         return livros.stream()
@@ -55,14 +66,14 @@ public class Controller {
                 .toList();
     }
 
-    @PostMapping("/novolivro")
+    @PostMapping("/livros")
     @CrossOrigin(origins = "*")
     public boolean cadastraLivroNovo(@RequestBody final Livro livro) {
         livros.add(livro);
         return true;
     }
 
-    @GetMapping("livrosporano")// livrosporano?ano=2023
+    @GetMapping("livrosporano") // livrosporano?ano=2023
     @CrossOrigin(origins = "*")
     public List<Livro> getLivrosPorAno(@RequestParam(value = "ano") int ano) {
         return livros.stream()
@@ -70,33 +81,43 @@ public class Controller {
                 .toList();
     }
 
-    @GetMapping("/desatualizados/{ano}") //desatualizados/2023
+    @GetMapping("/desatualizados/{ano}") // desatualizados/2023
     @CrossOrigin(origins = "*")
-    public List<Livro> getLivrosDoAutor(@PathVariable(value="ano")int ano) {
+    public List<Livro> getLivrosDoAutor(@PathVariable(value = "ano") int ano) {
         return livros.stream()
                 .filter(livro -> livro.getAno() < ano)
                 .toList();
     }
-    
-    @GetMapping("/livrosautor/{autor}/ano/{ano}") //livrosautor/Huguinho Pato/ano/2023
+
+    @GetMapping("/livrosautor/{autor}/ano/{ano}") // livrosautor/Huguinho Pato/ano/2023
     @CrossOrigin(origins = "*")
-    public List<Livro> getLivrosDoAutor(@PathVariable(value="autor") String autor, @PathVariable(value="ano")int ano) {
+    public List<Livro> getLivrosDoAutor(@PathVariable(value = "autor") String autor,
+            @PathVariable(value = "ano") int ano) {
         return livros.stream()
                 .filter(livro -> livro.getAutor().equals(autor.trim()))
                 .filter(livro -> livro.getAno() == ano)
                 .toList();
     }
 
-    @PostMapping("/atualiza")
+    @PutMapping("/livros/{codigo}")
     @CrossOrigin(origins = "*")
-    public boolean atualizaLivro(@RequestBody final Livro livroAtualizado) {
+    public boolean atualizaLivro(@PathVariable int codigo, @RequestBody final Livro novosDados) {
         Optional<Livro> livroOp = livros.stream()
-            .filter(l->l.getId() == livroAtualizado.getId())
-            .findAny();
-        if (livroOp.isPresent()){
-            livros.remove(livroOp.get());
-            livros.add(livroAtualizado);
+                .filter(livro -> livro.getId() == codigo)
+                .findAny();
+
+        if (livroOp.isEmpty()) {
+            return false;
         }
+
+        livros.remove(livroOp.get());
+        livros.add(new Livro(codigo, novosDados.getTitulo(), novosDados.getAutor(), novosDados.getAno()));
         return true;
+    }
+
+    @DeleteMapping("/livros/{codigo}")
+    @CrossOrigin(origins = "*")
+    public boolean removeLivro(@PathVariable int codigo) {
+        return livros.removeIf(livro -> livro.getId() == codigo);
     }
 }
