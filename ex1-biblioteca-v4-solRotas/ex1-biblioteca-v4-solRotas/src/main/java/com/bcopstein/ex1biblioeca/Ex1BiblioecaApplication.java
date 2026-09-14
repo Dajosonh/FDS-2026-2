@@ -6,9 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class Ex1BiblioecaApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(Ex1BiblioecaApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(Ex1BiblioecaApplication.class, args);
+    }
 
 }
-
